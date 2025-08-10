@@ -12,6 +12,7 @@
 #include "asymm_data.h"
 #include "pert.h"
 
+extern u32 Install_Key(void);
 
 
  //#define INIT_KEY
@@ -19,9 +20,9 @@
 // #define INFO
 // #define RAND
 // //#define RANDFILE
-// #define KEY_ACCESS
-#define SM9
-// #define ECC
+ #define KEY_ACCESS
+//#define SM9
+ #define ECC
 // #define RSA
 // #define RSA1024
 // #define ECC_CALC
@@ -5736,6 +5737,18 @@ int main()
 		goto err;
 	}
 	printf("open session ok\n");
+
+	// 调用Install_Key生成内部密钥
+	/*
+	printf("Calling Install_Key() to generate internal keys...\n");
+	r = Install_Key();
+	if(r)
+	{
+		printf("Install_Key fail:%x\n", r);
+		goto err;
+	}
+	printf("Install_Key success\n");
+	*/
 
 do{
 	
