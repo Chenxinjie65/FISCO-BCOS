@@ -1,0 +1,7 @@
+swig/
+.vscode/
+.DS_Store
+update.sh
+build/
+deps/
+.idea
