@@ -1,11 +1,11 @@
 file(GLOB HEADERS "*.h")
-file(GLOB SRC_LIST "*.cpp")
-add_executable(test-sdf-crypto ${SRC_LIST} ${HEADERS})
-EXECUTE_PROCESS(COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE)
-set(LIBRARY_NAME "sdf-crypto")
-find_library(SDF_CRYPTO_LIB NAMES sdf-crypto PATHS /home/fisco1/hsm-crypto/output)
-if (SDF_CRYPTO_LIB)
-    target_link_libraries(test-sdf-crypto PUBLIC ${SDF_CRYPTO_LIB} pthread ${CMAKE_DL_LIBS})
-else ()
-    message(FATAL_ERROR "sdf-crypto library not found!")
-endif ()
+# 第一个测试程序：TestSDF（使用TestSDF.cpp）
+add_executable(test-sdf-crypto TestSDF.cpp ${HEADERS})
+target_link_libraries(test-sdf-crypto PUBLIC sdf-crypto pthread ${CMAKE_DL_LIBS})
+target_link_directories(test-sdf-crypto PUBLIC ${CMAKE_BINARY_DIR}/output)
+
+# 第二个测试程序：test-verify-hash（使用testVerifyAndHash.cpp）
+add_executable(test-verify-hash testVerifyAndHash.cpp ${HEADERS})
+target_link_libraries(test-verify-hash PUBLIC sdf-crypto pthread ${CMAKE_DL_LIBS})
+target_link_directories(test-verify-hash PUBLIC ${CMAKE_BINARY_DIR}/output)
+
