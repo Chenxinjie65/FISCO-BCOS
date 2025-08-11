@@ -128,7 +128,7 @@ int main(int, const char* argv[])
     }
 
     std::cout << "****SignInternalKey****" << std::endl;
-    signResult = SignWithInternalKey(libPath, 1, "12345678", SM2, sdfToHex(bHashStdResultVector));
+    signResult = SignWithInternalKey(libPath, 1, "11111111", SM2, sdfToHex(bHashStdResultVector));
     if (signResult.sdfErrorMessage != nullptr)
     {
         std::cout << "Get error : " << signResult.sdfErrorMessage << std::endl;
