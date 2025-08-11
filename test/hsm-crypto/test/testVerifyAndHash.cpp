@@ -62,7 +62,7 @@ int main(int argc, const char *argv[]) {
               << std::endl;
     size_t sessionPoolRound = atoi(argv[1]);
     size_t loopRound = atoi(argv[2]);
-    const std::string libPath = "/usr/lib64/libswsds.so";
+    const std::string libPath = "/usr/lib/libgmt0018.so";
 
     std::cout << "****Verify Test****" << std::endl;
     //SDFCryptoResult result = Hash(libPath, nullptr, SM3, sdfToHex(bHashVector));
