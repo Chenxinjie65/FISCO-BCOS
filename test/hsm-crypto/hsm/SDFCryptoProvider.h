@@ -225,9 +225,9 @@ public:
      * Return the instance
      */
     static SDFCryptoProvider& GetInstance(
-        const std::string& libPath = "/usr/local/lib/libgmt0018.so");
+        const std::string& libPath = "/usr/lib/libgmt0018.so");
     static SDFCryptoProvider& GetInstance(
-        int sessionPoolSize, const std::string& libPath = "/usr/local/lib/libgmt0018.so");
+        int sessionPoolSize, const std::string& libPath = "/usr/lib/libgmt0018.so");
 
     /**
      * Generate key

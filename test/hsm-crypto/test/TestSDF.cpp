@@ -44,7 +44,7 @@ int main(int, const char* argv[])
               << std::endl;
     size_t sessionPoolRound = atoi(argv[1]);
     size_t loopRound = atoi(argv[2]);
-    const std::string libPath = "/usr/local/lib/libgmt0018.so";
+    const std::string libPath = "/usr/lib/libgmt0018.so";
     try
     {
         SDFCryptoProvider& provider = SDFCryptoProvider::GetInstance(sessionPoolRound, libPath);

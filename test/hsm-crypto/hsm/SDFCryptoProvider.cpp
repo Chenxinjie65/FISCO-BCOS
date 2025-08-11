@@ -244,7 +244,7 @@ unsigned int SDFCryptoProvider::KeyGen(AlgorithmType algorithm, Key* key)
 
         SGD_HANDLE sessionHandle = m_sessionPool->GetSession();
         SGD_RV result =
-            m_SDFApiWrapper->GenerateKeyPairECC(sessionHandle, SGD_SM2, keyLen, &pk, &sk);
+            m_SDFApiWrapper->GenerateKeyPairECC(sessionHandle, SGD_SM2_1, keyLen, &pk, &sk);
         if (result != SDR_OK)
         {
             m_sessionPool->ReturnSession(sessionHandle);
