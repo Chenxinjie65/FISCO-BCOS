@@ -241,7 +241,7 @@ check_env() {
         export PATH="/usr/local/opt/openssl/bin:$PATH"
         macOS="macOS"
     fi
-    [ ! -z "$(openssl version | grep 1.0.2)" ] || [ ! -z "$(openssl version | grep 1.1)" ] || {
+    [ ! -z "$(openssl version | grep 1.0.2)" ] || [ ! -z "$(openssl version | grep 1.1)" ] ||  [ ! -z "$(openssl version | grep 3.)" ] || {
         echo "please install openssl!"
         #echo "download openssl from https://www.openssl.org."
         echo "use \"openssl version\" command to check."
@@ -256,7 +256,7 @@ check_env() {
 check_and_install_tassl(){
 if [ -n "${guomi_mode}" ]; then
     if [ ! -f "${TASSL_CMD}" ];then
-        local tassl_link_perfix="${cdn_link_header}/FISCO-BCOS/tools/tassl-1.0.2"
+        local tassl_link_perfix="https://github.com/FISCO-BCOS/TASSL/releases/download/v1.0.2/"
         LOG_INFO "Downloading tassl binary from ${tassl_link_perfix}..."
         if [[ -n "${macOS}" ]];then
             curl -#LO "${tassl_link_perfix}/tassl_mac.tar.gz"
