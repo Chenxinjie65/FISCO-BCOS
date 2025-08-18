@@ -15,6 +15,7 @@
 *.so
 *.dylib
 *.dll
+!test/sdf_test_SM9/libsdf_crypto.so
 
 # Fortran module files
 *.mod
