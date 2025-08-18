@@ -48,7 +48,7 @@ std::shared_ptr<crypto::Signature> dev::crypto::SDFSM2Sign(
     Key key = Key();
     if (_keyPair.isInternalKey())
     {
-        key = Key((_keyPair.keyIndex() + 1) / 2, NULL);
+        key = Key((_keyPair.keyIndex() + 1) / 2, "11111111");
         //CRYPTO_LOG(DEBUG) << "[HSMSignature::key] is internal key "
         //                  << LOG_KV("keyIndex", key.identifier());
     }
