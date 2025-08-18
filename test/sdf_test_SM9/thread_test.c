@@ -16,7 +16,7 @@ struct thread_param{
 	void *hDevcieHandle;
 	void *hSessionHandle;
 };
-struct timeval start_time, finish_time;
+static struct timeval start_time, finish_time;
 
 void *symm_func(void *arg)
 {

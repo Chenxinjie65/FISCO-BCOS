@@ -92,7 +92,7 @@ struct thread_param{
 	void *hSessionHandle;
 	void *hKeyHandle;
 };
-struct timeval start_time, finish_time;
+static struct timeval start_time, finish_time;
 
 void *symm_enc_performance(void *arg)
 {
