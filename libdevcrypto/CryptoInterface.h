@@ -24,6 +24,9 @@
 #include "Common.h"
 #include "Hash.h"
 #include "SM3Hash.h"
+#if FISCO_SDF
+#include "hsm/HSMHash.h"
+#endif
 #include "Signature.h"
 #include "libdevcore/FixedHash.h"
 #include <libconfig/GlobalConfigure.h>
@@ -83,7 +86,11 @@ inline h256 Hash(T&& _data)
 {
     if (g_BCOSConfig.SMCrypto())
     {
+#if FISCO_SDF
+        return SDFSM3(_data);
+#else
         return sm3(_data);
+#endif
     }
     return keccak256(_data);
 }
