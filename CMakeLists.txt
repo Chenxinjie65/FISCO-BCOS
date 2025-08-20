@@ -68,6 +68,7 @@ if(USE_HSM_SDF)
 endif()
 
 include_directories("${CMAKE_SOURCE_DIR}")
+include_directories("${CMAKE_SOURCE_DIR}/deps/src/libsdf/include")
 
 add_subdirectory(libchannelserver)
 add_subdirectory(libdevcore)
