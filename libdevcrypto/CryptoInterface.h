@@ -29,7 +29,9 @@
 #endif
 #include "Signature.h"
 #include "libdevcore/FixedHash.h"
+#include "libdevcore/Log.h"
 #include <libconfig/GlobalConfigure.h>
+#include <execinfo.h>
 #include <functional>
 #include <string>
 
@@ -81,9 +83,31 @@ inline SecureFixedHash<32> Hash(SecureFixedHash<N>&& _data)
     return keccak256Secure(_data);
 }
 
+inline std::string getStackTrace()
+{
+    const int MAX_FRAMES = 100;
+    void* frames[MAX_FRAMES];
+    int frameCount = backtrace(frames, MAX_FRAMES);
+    char** frameStrings = backtrace_symbols(frames, frameCount);
+    
+    std::string stackTrace;
+    stackTrace += "\n=== Start Stack Trace ===\n";
+    
+    for (int i = 0; i < frameCount; i++)
+    {
+        stackTrace += "Frame " + std::to_string(i) + ": " + frameStrings[i] + "\n";
+    }
+    
+    stackTrace += "=== End Stack Trace ===\n";
+    free(frameStrings);
+    return stackTrace;
+}
+
 template <typename T>
 inline h256 Hash(T&& _data)
 {
+    LOG(INFO) << "Hash function called with call stack:" << std::endl << getStackTrace();
+    
     if (g_BCOSConfig.SMCrypto())
     {
 #if FISCO_SDF

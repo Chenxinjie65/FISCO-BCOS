@@ -156,6 +156,46 @@ int main(int, const char* argv[])
     totalCost = endT - startT;
     std::cout << "##### SDF SM3 totalTimecost:" << totalCost << ", time per sign:" << totalCost/(double)(loopRound) << ", tps:"<< (double)(loopRound)/(totalCost/1000000)<< std::endl << endl;
 
+    // 比较sm3和SDFSM3计算结果是否相同
+    std::cout << "### verify sm3 and SDFSM3" << std::endl;
+    std::string testInput1 = "test_sm3_consistency_check";
+    std::string testInput2 = "another_test_string_for_hash_comparison";
+    std::string testInput3 = "";
+    
+    // 测试不同长度的输入
+    std::vector<std::string> testInputs = {testInput1, testInput2, testInput3};
+    
+    bool allResultsEqual = true;
+    
+    for (const auto& testStr : testInputs)
+    {
+        h256 softResult = sm3(testStr);
+        h256 hsmResult = SDFSM3(testStr);
+        
+        std::cout << "input: \"" << testStr << "\"" << std::endl;
+        std::cout << "SM3 result: " << softResult.hex() << std::endl;
+        std::cout << "HSM SM3 result: " << hsmResult.hex() << std::endl;
+        
+        if (softResult == hsmResult)
+        {
+            std::cout << "result:same" << std::endl;
+        }
+        else
+        {
+            std::cout << "result:different" << std::endl;
+            allResultsEqual = false;
+        }
+        std::cout << std::endl;
+    }
+    
+    if (allResultsEqual)
+    {
+        std::cout << "All sm3 and SDFSM3 same" << std::endl << std::endl;
+    }
+    else
+    {
+        std::cout << "sm3 and SDFSM3 different" << std::endl << std::endl;
+    }
 
     std::cout << "### test sm2 sign" << std::endl;
     auto hash = sm3(input);

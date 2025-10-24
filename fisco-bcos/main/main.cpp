@@ -30,10 +30,36 @@
 #include <iostream>
 #include <memory>
 #include <thread>
+#include <execinfo.h>  
+#include <libdevcore/Log.h>  
 
 using namespace std;
 using namespace dev;
 using namespace dev::initializer;
+
+/**
+ * @brief 获取当前函数调用栈
+ * @return 调用栈
+ */
+inline std::string getStackTrace()
+{
+    const int MAX_FRAMES = 100;
+    void* frames[MAX_FRAMES];
+    int frameCount = backtrace(frames, MAX_FRAMES);
+    char** frameStrings = backtrace_symbols(frames, frameCount);
+    
+    std::string stackTrace;
+    stackTrace += "\n=== Start Stack Trace ===\n";
+    
+    for (int i = 0; i < frameCount; i++)
+    {
+        stackTrace += "Frame " + std::to_string(i) + ": " + frameStrings[i] + "\n";
+    }
+    
+    stackTrace += "=== End Stack Trace ===\n";
+    free(frameStrings);
+    return stackTrace;
+}
 
 void checkAndCall(const std::string& configPath, shared_ptr<Initializer> initializer)
 {
@@ -77,16 +103,28 @@ int main(int argc, const char* argv[])
         configPath = initCommandLine(argc, argv);
         std::cout << "[" << getCurrentDateTime() << "] ";
         std::cout << "Initializing..." << std::endl;
+        
+        LOG(INFO) << LOG_BADGE("StackTrace") << LOG_DESC("Node initialization started") 
+                  << "\n" << getStackTrace();
+        
         initialize->init(configPath);
+        
+        LOG(INFO) << LOG_BADGE("StackTrace") << LOG_DESC("Node initialization completed") 
+                  << "\n" << getStackTrace();
     }
     catch (std::exception& e)
     {
         std::cerr << "Init failed!!!" << std::endl;
+        LOG(ERROR) << LOG_BADGE("StackTrace") << LOG_DESC("Node initialization failed") 
+                   << LOG_KV("error", e.what()) << "\n" << getStackTrace();
         return -1;
     }
     dev::version();
     std::cout << "[" << getCurrentDateTime() << "] ";
     std::cout << "The FISCO-BCOS is running..." << std::endl;
+    
+    LOG(INFO) << LOG_BADGE("StackTrace") << LOG_DESC("Node startup completed") 
+              << "\n" << getStackTrace();
 
     while (!exitHandler.shouldExit())
     {
